@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phantom Clan | Diosesmon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a070f;
+    --panel: #16101f;
+    --panel-alt: #1d1528;
+    --border: #2b2138;
+    --text: #f2ecf7;
+    --text-dim: #9c8fb0;
+    --accent: #c026d3;
+    --accent2: #7c3aed;
+    --accent-soft: rgba(192,38,211,0.14);
+    --fire: #ff7a45;
+    --success: #58c896;
+    --success-soft: rgba(88,200,150,0.14);
+    --signal: #ef4a6a;
+    --signal-soft: rgba(239,74,106,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 12% 0%, rgba(124,58,237,0.18), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent-soft);}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 40px;}
+  .eyebrow{
+    font-family:'Rajdhani',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:2px;
+    color:#f0b6f7;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .eyebrow::before{content:"//";color:var(--accent2);}
+  .section-title{
+    font-family:'Rajdhani',sans-serif;
+    font-weight:700;
+    font-size:32px;
+    letter-spacing:.3px;
+    margin:0 0 10px;
+  }
+  .section-sub{
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:60ch;
+    line-height:1.6;
+    margin:0 0 40px;
+  }
+  section{padding:80px 0;border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+
+  /* ---------- TOP NAV ---------- */
+  .topnav{
+    position:sticky;top:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 40px;
+    background:rgba(10,7,15,0.75);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .logo{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:23px;letter-spacing:2px;
+    background:linear-gradient(90deg,#ff6fe0,var(--accent) 55%,var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 14px rgba(192,38,211,.35));
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo svg{width:22px;height:22px;flex-shrink:0;}
+  .logo svg path,.logo svg circle{stroke:var(--accent);}
+  .nav-center{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600;color:var(--text-dim);}
+  .nav-center a:hover{color:var(--text);}
+  .nav-drop{position:relative;}
+  .nav-drop > span{cursor:pointer;display:flex;align-items:center;gap:5px;}
+  .nav-drop > span:hover{color:var(--text);}
+  .nav-drop svg{width:12px;height:12px;transition:transform .15s ease;}
+  .nav-drop.open svg{transform:rotate(180deg);}
+  .dropdown{
+    position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);
+    background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    padding:8px;min-width:170px;display:none;flex-direction:column;gap:2px;
+    box-shadow:0 20px 40px rgba(0,0,0,.4);
+  }
+  .nav-drop.open .dropdown{display:flex;}
+  .dropdown a{padding:9px 12px;border-radius:8px;font-size:13.5px;color:var(--text-dim);}
+  .dropdown a:hover{background:var(--panel-alt);color:var(--text);}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .server-pill{
+    display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--border);
+    padding:8px 14px;border-radius:10px;font-size:12.5px;color:var(--text-dim);
+  }
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);flex-shrink:0;}
+  .btn-discord{
+    background:var(--panel-alt);border:1px solid var(--border);padding:8px 16px;border-radius:10px;
+    font-size:13px;font-weight:600;
+  }
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;
+    padding:13px 24px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;
+    transition:transform .15s ease,opacity .15s ease;font-family:'Inter',sans-serif;
+  }
+  .btn:hover{transform:translateY(-1px);opacity:.94;}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 24px rgba(192,38,211,.28);}
+  .btn.secondary{background:var(--panel);color:var(--text);border:1px solid var(--border);}
+  .btn.small{padding:8px 15px;font-size:12.5px;}
+  .btn.danger{background:transparent;color:var(--signal);border:1px solid var(--signal);padding:7px 14px;font-size:12.5px;}
+
+  /* ---------- HERO ---------- */
+  #inicio{padding-top:70px;padding-bottom:0;border-bottom:none;}
+  .hero{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:center;padding-bottom:56px;}
+  .badge-pill{
+    display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);
+    padding:7px 16px 7px 8px;border-radius:30px;font-size:12.5px;color:var(--text-dim);margin-bottom:26px;
+  }
+  .badge-pill b{background:var(--accent-soft);color:#f0b6f7;padding:3px 10px;border-radius:20px;font-weight:700;font-size:11.5px;letter-spacing:.5px;}
+  .hero-heading{font-family:'Inter',sans-serif;font-weight:900;font-size:52px;line-height:1.08;letter-spacing:-1px;margin:0;}
+  .hero-heading .accent-word{background:linear-gradient(90deg,#ff6fe0,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero-desc{color:var(--text-dim);font-size:16px;line-height:1.7;max-width:54ch;margin:22px 0 32px;}
+  .hero-desc strong{color:var(--text);}
+  .hero-ctas{display:flex;gap:12px;margin-bottom:44px;}
+  .hero-stats{display:flex;gap:36px;}
+  .hstat-num{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:28px;}
+  .hstat-label{font-size:12.5px;color:var(--text-dim);margin-top:2px;}
+  .hero-visual{position:relative;display:flex;align-items:center;justify-content:center;height:360px;}
+  .hero-visual .glow{position:absolute;width:280px;height:280px;background:radial-gradient(circle,rgba(255,122,69,0.25),transparent 70%);filter:blur(10px);animation:pulseGlow 4s ease-in-out infinite;}
+  @keyframes pulseGlow{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+  .creature{position:relative;width:280px;animation:floatY 3.4s ease-in-out infinite;filter:drop-shadow(0 20px 30px rgba(255,122,69,0.3));}
+  @keyframes floatY{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-16px) rotate(-1.5deg);}}
+  .wing-l{animation:flapL 2.1s ease-in-out infinite;transform-origin:70px 95px;}
+  .wing-r{animation:flapR 2.1s ease-in-out infinite;transform-origin:220px 95px;}
+  @keyframes flapL{0%,100%{transform:rotate(0deg);}50%{transform:rotate(7deg);}}
+  @keyframes flapR{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-7deg);}}
+  .eye-glow{animation:eyePulse 1.8s ease-in-out infinite;}
+  @keyframes eyePulse{0%,100%{opacity:.7;}50%{opacity:1;}}
+  .flame{animation:flick 1.4s ease-in-out infinite;transform-origin:145px 178px;}
+  @keyframes flick{0%,100%{transform:scaleY(1);}50%{transform:scaleY(1.18);}}
+  .particle{position:absolute;border-radius:50%;background:var(--fire);opacity:.6;filter:blur(1px);animation:drift 5s ease-in-out infinite;}
+  @keyframes drift{0%,100%{transform:translate(0,0);opacity:.2;}50%{transform:translate(-8px,-18px);opacity:.7;}}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee-wrap{
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    background:var(--panel);overflow:hidden;padding:16px 0;
+  }
+  .marquee-track{display:flex;gap:0;width:max-content;animation:scrollLeft 26s linear infinite;}
+  .marquee-track span{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;letter-spacing:1.5px;
+    color:var(--text-dim);padding:0 28px;white-space:nowrap;display:flex;align-items:center;gap:28px;
+  }
+  .marquee-track span::after{content:"◆";color:var(--accent);font-size:9px;}
+  @keyframes scrollLeft{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- NOTICIAS ---------- */
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .news-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .15s ease;}
+  .news-card:hover{transform:translateY(-3px);}
+  .news-thumb{height:130px;position:relative;}
+  .news-tag{
+    position:absolute;top:12px;left:12px;background:rgba(10,7,15,.6);backdrop-filter:blur(6px);
+    color:#f0b6f7;font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:20px;
+  }
+  .news-body{padding:18px 20px 22px;}
+  .news-date{font-size:12px;color:var(--text-dim);margin-bottom:8px;}
+  .news-title{font-weight:700;font-size:16px;margin-bottom:8px;line-height:1.35;}
+  .news-desc{font-size:13.5px;color:var(--text-dim);line-height:1.6;}
+
+  /* ---------- HUB ---------- */
+  .hub-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+  .hub-stat{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;}
+  .hub-num{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:34px;color:#f0b6f7;}
+  .hub-label{font-size:13px;color:var(--text-dim);margin-top:4px;}
+  .hub-cta{
+    background:linear-gradient(120deg,var(--panel),var(--panel-alt));
+    border:1px solid var(--border);border-radius:16px;padding:36px 40px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  }
+  .hub-cta h3{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;margin:0 0 8px;}
+  .hub-cta p{color:var(--text-dim);font-size:14px;max-width:48ch;margin:0;line-height:1.6;}
+
+  /* ---------- CARDS / FORMS (postulaciones, comercio, rangos) ---------- */
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  label{font-size:12.5px;color:var(--text-dim);font-weight:500;}
+  input,select,textarea{
+    background:var(--panel-alt);border:1px solid var(--border);color:var(--text);padding:10px 12px;
+    border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .15s ease;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+  textarea{resize:vertical;min-height:80px;}
+  .list{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+  .row-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;}
+  .row-main{flex:1;}
+  .row-title{font-weight:600;font-size:15px;margin-bottom:3px;}
+  .row-meta{font-size:12.5px;color:var(--text-dim);margin-bottom:8px;}
+  .row-body{font-size:13.5px;color:var(--text-dim);line-height:1.6;max-width:60ch;}
+  .row-actions{display:flex;gap:8px;flex-shrink:0;align-items:center;}
+  .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px;}
+  .badge.pending{background:var(--accent-soft);color:#f0b6f7;}
+  .badge.accepted{background:var(--success-soft);color:var(--success);}
+  .badge.rejected{background:var(--signal-soft);color:var(--signal);}
+  .badge.sold{background:rgba(255,255,255,0.08);color:var(--text-dim);}
+  .empty{color:var(--text-dim);font-size:14px;padding:30px 0;text-align:center;border:1px dashed var(--border);border-radius:14px;}
+  .price-tag{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:20px;color:#f0b6f7;}
+  .subgroup-title{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:18px;margin:34px 0 14px;}
+
+  /* ---------- RANGOS ---------- */
+  .rank-tier{display:flex;align-items:center;gap:16px;padding:18px 4px;border-bottom:1px solid var(--border);}
+  .rank-tier:last-child{border-bottom:none;}
+  .ghost-icon{width:30px;height:30px;flex-shrink:0;}
+  .rank-name{font-weight:700;font-size:16px;}
+  .rank-desc{font-size:12.5px;color:var(--text-dim);margin-top:2px;}
+  .member-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);gap:14px;}
+  .member-row:last-child{border-bottom:none;}
+  .member-name{font-weight:600;font-size:14.5px;}
+  select.rank-select{padding:7px 10px;font-size:13px;}
+  .loading{color:var(--text-dim);font-size:13.5px;padding:20px 0;}
+
+  /* ---------- SESION / LOGIN ---------- */
+  .session-pill{
+    display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);
+    padding:8px 14px;border-radius:10px;font-size:12.5px;color:var(--text-dim);cursor:pointer;font-weight:600;
+  }
+  .session-pill:hover{border-color:var(--accent);}
+  .session-pill .rank-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(5,3,8,.72);backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;z-index:200;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:360px;box-shadow:0 30px 60px rgba(0,0,0,.5);}
+  .modal-box h4{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;margin:0 0 4px;}
+  .modal-box .modal-sub{color:var(--text-dim);font-size:13px;margin:0 0 20px;line-height:1.5;}
+  .modal-box .field{margin-bottom:14px;}
+  .modal-actions{display:flex;gap:10px;margin-top:18px;}
+  .modal-actions .btn{flex:1;}
+  .modal-error{color:var(--signal);font-size:12.5px;margin-top:8px;display:none;}
+  .modal-error.show{display:block;}
+  .locked-box{
+    border:1px dashed var(--border);border-radius:14px;padding:26px;text-align:center;
+    color:var(--text-dim);font-size:14px;line-height:1.6;
+  }
+  .locked-box .btn{margin-top:14px;}
+  [data-solo-lider], [data-solo-oficialidad]{display:none;}
+
+  /* ---------- REGLAS ---------- */
+  .rules-list{display:flex;flex-direction:column;}
+  .rule-item{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);}
+  .rule-item:last-child{border-bottom:none;}
+  .rule-num{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:22px;color:var(--accent2);
+    width:36px;flex-shrink:0;
+  }
+  .rule-title{font-weight:700;font-size:16px;margin-bottom:6px;}
+  .rule-desc{font-size:14px;color:var(--text-dim);line-height:1.65;max-width:65ch;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:56px 0 30px;}
+  .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:36px;border-bottom:1px solid var(--border);}
+  .footer-tagline{color:var(--text-dim);font-size:13.5px;line-height:1.6;margin:14px 0 18px;max-width:32ch;}
+  .footer-socials{display:flex;gap:10px;}
+  .footer-socials a{width:34px;height:34px;border-radius:8px;background:var(--panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+  .footer-socials svg{width:15px;height:15px;opacity:.8;}
+  .footer-col h5{font-size:11.5px;letter-spacing:1px;color:var(--text-dim);margin:0 0 14px;font-weight:700;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--text-dim);margin-bottom:10px;}
+  .footer-col a:hover{color:var(--text);}
+  .footer-bottom{padding-top:22px;font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+  @media (max-width:900px){
+    .wrap{padding:0 20px;}
+    .hero{grid-template-columns:1fr;padding-top:20px;}
+    .hero-visual{height:240px;order:-1;}
+    .hero-heading{font-size:36px;}
+    .topnav{padding:14px 18px;}
+    .nav-center{display:none;}
+    .news-grid{grid-template-columns:1fr;}
+    .hub-stats{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;gap:26px;}
+    .hero-stats{flex-wrap:wrap;gap:22px;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="topnav">
+    <a href="#inicio" class="logo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 2C9 2 5 7 5 14v12l3.5-3 3 3 4.5-4.5 4.5 4.5 3-3 3.5 3V14C24 7 20 2 16 2z" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle cx="12" cy="14" r="1.6"/><circle cx="20" cy="14" r="1.6"/>
+      </svg>
+      PHANTOM
+    </a>
+    <nav class="nav-center">
+      <a href="#inicio">Inicio</a>
+      <a href="#noticias">Noticias</a>
+      <div class="nav-drop" id="clanDrop">
+        <span>Clan <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l5 5 5-5"/></svg></span>
+        <div class="dropdown">
+          <a href="#clan">Ver clan</a>
+          <a href="#postulaciones">Postular</a>
+          <a href="#comercio">Comercio</a>
+          <a href="#twitch">Twitch</a>
+          <a href="#rangos">Rangos</a>
+        </div>
+      </div>
+      <a href="#reglas">Reglas</a>
+      <a href="asesor.html">Asesor IA</a>
+    </nav>
+    <div class="nav-right">
+      <div class="server-pill"><span class="live-dot"></span><span id="nav-miembros" class="js-discord-online">—</span> conectados</div>
+      <div class="session-pill" id="session-pill"><span class="rank-dot"></span><span id="session-label">Iniciar sesión</span></div>
+      <a href="https://discord.gg/ZeRBnJXN5" target="_blank" rel="noopener" class="btn-discord">Discord ↗</a>
+    </div>
+  </header>
+
+  <!-- ============ MODAL LOGIN ============ -->
+  <div class="modal-overlay" id="login-overlay">
+    <div class="modal-box">
+      <h4 id="login-title">Iniciar sesión</h4>
+      <p class="modal-sub" id="login-sub">Elige tu nombre en el roster. Si es la primera vez que entras, la contraseña que escribas se guardará como la tuya.</p>
+      <form id="form-login">
+        <div class="field">
+          <label for="login-miembro">Tu nombre en el clan</label>
+          <select id="login-miembro"></select>
+        </div>
+        <div class="field">
+          <label for="login-pass" id="login-pass-label">Contraseña (mín. 4 caracteres)</label>
+          <input type="password" id="login-pass" required placeholder="••••••••">
+        </div>
+        <div class="modal-error" id="login-error">Contraseña incorrecta.</div>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" id="login-cancel">Cancelar</button>
+          <button type="submit" class="btn primary">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ INICIO ============ -->
+  <section id="inicio">
+    <div class="wrap">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="badge-pill"><b>TOP</b> Servidor Diosesmon</div>
+          <h1 class="hero-heading">Dominando el <span class="accent-word">Meta</span><br>de Diosesmon</h1>
+          <p class="hero-desc">Somos <strong>Phantom</strong>, un clan competitivo de élite en Diosesmon. Estrategia, disciplina y cacería implacable de los mejores IVs del servidor.</p>
+          <div class="hero-ctas">
+            <a href="#postulaciones" class="btn primary">Unirse al Clan →</a>
+            <a href="#reglas" class="btn secondary">Ver Reglas</a>
+          </div>
+          <div class="hero-stats">
+            <div><div class="hstat-num">#4</div><div class="hstat-label">Ranking Diosesmon</div></div>
+            <div><div class="hstat-num">1200</div><div class="hstat-label">Victorias Registradas</div></div>
+            <div><div class="hstat-num js-discord-online" id="stat-miembros">—</div><div class="hstat-label">Miembros Activos</div></div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="glow"></div>
+          <svg class="creature" viewBox="0 0 290 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g class="wing-l">
+              <rect x="55" y="60" width="16" height="16" fill="#3a2015"/>
+              <rect x="71" y="76" width="16" height="16" fill="#3a2015"/>
+              <rect x="55" y="92" width="16" height="16" fill="#2c180f"/>
+              <rect x="39" y="92" width="16" height="16" fill="#3a2015"/>
+              <rect x="87" y="92" width="16" height="16" fill="#2c180f"/>
+              <rect x="71" y="108" width="16" height="16" fill="#2c180f"/>
+              <rect x="87" y="108" width="16" height="16" fill="#23130c"/>
+              <rect x="55" y="60" width="8" height="60" fill="url(#wingGradL)" opacity="0.55"/>
+            </g>
+            <g class="wing-r">
+              <rect x="219" y="60" width="16" height="16" fill="#3a2015"/>
+              <rect x="203" y="76" width="16" height="16" fill="#3a2015"/>
+              <rect x="219" y="92" width="16" height="16" fill="#2c180f"/>
+              <rect x="235" y="92" width="16" height="16" fill="#3a2015"/>
+              <rect x="187" y="92" width="16" height="16" fill="#2c180f"/>
+              <rect x="203" y="108" width="16" height="16" fill="#2c180f"/>
+              <rect x="187" y="108" width="16" height="16" fill="#23130c"/>
+            </g>
+            <rect x="119" y="70" width="16" height="16" fill="#5a3320"/>
+            <rect x="135" y="70" width="16" height="16" fill="#5a3320"/>
+            <rect x="119" y="86" width="16" height="16" fill="#4a2a1a"/>
+            <rect x="135" y="86" width="16" height="16" fill="#4a2a1a"/>
+            <rect x="103" y="86" width="16" height="16" fill="#3a2015"/>
+            <rect x="151" y="86" width="16" height="16" fill="#3a2015"/>
+            <rect x="119" y="102" width="16" height="16" fill="#3a2015"/>
+            <rect x="135" y="102" width="16" height="16" fill="#3a2015"/>
+            <rect x="119" y="118" width="16" height="16" fill="#23130c"/>
+            <rect x="135" y="118" width="16" height="16" fill="#23130c"/>
+            <rect class="eye-glow" x="115" y="90" width="7" height="7" fill="#ff9d5c"/>
+            <rect class="eye-glow" x="150" y="90" width="7" height="7" fill="#ff9d5c"/>
+            <rect x="127" y="134" width="16" height="16" fill="#23130c"/>
+            <rect x="127" y="150" width="16" height="16" fill="#1c110a"/>
+            <rect x="143" y="160" width="16" height="16" fill="#1c110a"/>
+            <g class="flame">
+              <rect x="159" y="172" width="12" height="14" fill="#ff7a45"/>
+              <rect x="171" y="178" width="8" height="10" fill="#ffb15c"/>
+            </g>
+            <defs>
+              <linearGradient id="wingGradL" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ff7a45"/>
+                <stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="particle" style="width:6px;height:6px;top:40%;left:18%;animation-delay:.2s;"></div>
+          <div class="particle" style="width:4px;height:4px;top:65%;left:75%;animation-delay:1.4s;"></div>
+          <div class="particle" style="width:5px;height:5px;top:22%;left:70%;animation-delay:.8s;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+  </section>
+
+  <!-- ============ NOTICIAS ============ -->
+  <section id="noticias">
+    <div class="wrap">
+      <div class="eyebrow">COMUNICADOS OFICIALES</div>
+      <h2 class="section-title">Noticias del Clan</h2>
+      <p class="section-sub">Novedades del meta, eventos internos y avisos de la oficialidad.</p>
+
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-thumb" style="background:linear-gradient(135deg,#c026d3,#7c3aed);"></div>
+          <div class="news-body">
+            <span class="news-tag" style="position:static;display:inline-block;margin-bottom:8px;background:var(--accent-soft);color:#f0b6f7;">CLAN</span>
+            <div class="news-title">¡Postulaciones abiertas! Únete a Phantom</div>
+            <div class="news-desc">Abrimos convocatoria para nuevos miembros. Si tienes lo que hace falta para representar a Phantom, postula ahora.</div>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-thumb" style="background:linear-gradient(135deg,#ff7a45,#c026d3);"></div>
+          <div class="news-body">
+            <span class="news-tag" style="position:static;display:inline-block;margin-bottom:8px;background:var(--accent-soft);color:#f0b6f7;">ENTRENAMIENTO</span>
+            <div class="news-title">Nueva zona de entrenamiento para miembros</div>
+            <div class="news-desc">Disponible el nuevo espacio de práctica y farmeo exclusivo para quienes ya forman parte del clan.</div>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-thumb" style="background:linear-gradient(135deg,#7c3aed,#3a2015);"></div>
+          <div class="news-body">
+            <span class="news-tag" style="position:static;display:inline-block;margin-bottom:8px;background:var(--accent-soft);color:#f0b6f7;">PROGRESO</span>
+            <div class="news-title">Zona de cría compartida ya activa</div>
+            <div class="news-desc">Ven a criar y mejorar tus equipos junto al resto del clan en el nuevo espacio comunitario.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EL CLAN (HUB) ============ -->
+  <section id="clan">
+    <div class="wrap">
+      <div class="eyebrow">HUB COMPETITIVO</div>
+      <h2 class="section-title">El Clan Phantom</h2>
+      <p class="section-sub">Élite competitiva de Diosesmon. Esto es lo que somos ahora mismo.</p>
+
+      <div class="hub-stats">
+        <div class="hub-stat"><div class="hub-num">1200</div><div class="hub-label">Victorias Totales</div></div>
+        <div class="hub-stat"><div class="hub-num js-discord-online" id="hub-miembros">—</div><div class="hub-label">Miembros Activos</div></div>
+        <div class="hub-stat"><div class="hub-num">#4</div><div class="hub-label">Posición en Diosesmon</div></div>
+      </div>
+
+      <div class="hub-cta">
+        <div>
+          <h3>¿Quieres unirte a Phantom?</h3>
+          <p>Rellena el formulario de postulación y cuéntanos quién eres. Revisamos cada solicitud y te contactamos por Discord.</p>
+        </div>
+        <a href="#postulaciones" class="btn primary">Postular al Clan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ POSTULACIONES ============ -->
+  <section id="postulaciones">
+    <div class="wrap">
+      <div class="eyebrow">RECLUTAMIENTO ABIERTO</div>
+      <h2 class="section-title">Postulaciones</h2>
+      <p class="section-sub">¿Quieres unirte a Phantom? Rellena el formulario. La oficialidad revisa las solicitudes y te dirá si entras.</p>
+
+      <div class="card" id="postulacion-card">
+        <form id="form-postulacion">
+          <div class="form-grid">
+            <div class="field"><label for="p-discord">Usuario de Discord *</label><input type="text" id="p-discord" required placeholder="Ej: shadow#1234"></div>
+            <div class="field"><label for="p-email">Email de contacto *</label><input type="email" id="p-email" required placeholder="tucorreo@ejemplo.com"></div>
+            <div class="field"><label for="p-mcuser">Usuario de Minecraft *</label><input type="text" id="p-mcuser" required placeholder="Ej: Shadow_99"></div>
+            <div class="field"><label for="p-edad">¿Cuál es tu edad? *</label><input type="number" id="p-edad" min="10" max="99" required placeholder="Ej: 17"></div>
+            <div class="field full"><label for="p-pais">¿De qué país eres/cuál es tu franja horaria? *</label><input type="text" id="p-pais" required placeholder="Ej: España, CET / UTC+1"></div>
+
+            <div class="field"><label for="p-expbasica">¿Tienes experiencia básica en Minecraft? *</label>
+              <input type="text" id="p-expbasica" required placeholder="Escribe tu respuesta...">
+            </div>
+            <div class="field"><label for="p-expavanzada">¿Experiencia en mecánicas avanzadas (ej: redstone)? *</label>
+              <input type="text" id="p-expavanzada" required placeholder="Escribe tu respuesta...">
+            </div>
+            <div class="field"><label for="p-cobblemon">¿Tienes experiencia en Cobblemon? *</label>
+              <input type="text" id="p-cobblemon" required placeholder="Escribe tu respuesta...">
+            </div>
+            <div class="field"><label for="p-competitivo">¿Experiencia en Pokémon a nivel competitivo? *</label>
+              <input type="text" id="p-competitivo" required placeholder="Escribe tu respuesta...">
+            </div>
+
+            <div class="field"><label for="p-rangocomprado">¿Tienes algún rango comprado en DIOSESMON? *</label>
+              <input type="text" id="p-rangocomprado" required placeholder="Escribe tu respuesta...">
+            </div>
+            <div class="field"><label for="p-rangofuturo">¿Intención de comprar algún rango próximamente? (indica cuál) *</label><input type="text" id="p-rangofuturo" required placeholder="Ej: No / Sí, el rango VIP"></div>
+
+            <div class="field full"><label for="p-construccion">¿Cómo consideras tu nivel de construcción en Minecraft? (descríbelo brevemente) *</label><textarea id="p-construccion" required placeholder="Tu nivel de construcción..."></textarea></div>
+            <div class="field full"><label for="p-decoracion">¿Cómo consideras tu nivel de decoración en Minecraft? (descríbelo brevemente) *</label><textarea id="p-decoracion" required placeholder="Tu nivel de decoración..."></textarea></div>
+
+            <div class="field"><label for="p-activo">¿Eres activo a diario? *</label>
+              <input type="text" id="p-activo" required placeholder="Escribe tu respuesta...">
+            </div>
+            <div class="field"><label for="p-llamada">¿Dispuesto a estar en llamada de Discord con el clan? *</label>
+              <input type="text" id="p-llamada" required placeholder="Escribe tu respuesta...">
+            </div>
+            <div class="field"><label for="p-mudanza">¿De acuerdo con mudarte a la sede principal del clan si te aceptan? *</label>
+              <input type="text" id="p-mudanza" required placeholder="Escribe tu respuesta...">
+            </div>
+
+            <div class="field full"><label for="p-aporte">¿Qué crees que podrías aportarle al clan? *</label><textarea id="p-aporte" required placeholder="Tu aporte..."></textarea></div>
+            <div class="field full"><label for="p-comentario">¿Tienes algo más que comentar?</label><textarea id="p-comentario" placeholder="Opcional..."></textarea></div>
+          </div>
+          <div style="margin-top:18px;"><button type="submit" class="btn primary">Enviar postulación</button></div>
+        </form>
+      </div>
+
+      <div class="locked-box" id="postulaciones-locked">
+        Solo el Líder y los Co-Líderes pueden ver las solicitudes recibidas.
+        <div><button type="button" class="btn primary small" id="postulaciones-login-btn">Iniciar sesión</button></div>
+      </div>
+      <div class="subgroup-title" id="postulaciones-title" style="display:none;">Solicitudes recibidas</div>
+      <div class="list" id="lista-postulaciones" style="display:none;"><div class="loading">Cargando solicitudes...</div></div>
+    </div>
+  </section>
+
+  <!-- ============ COMERCIO ============ -->
+  <section id="comercio">
+    <div class="wrap">
+      <div class="eyebrow">MERCADO INTERNO</div>
+      <h2 class="section-title">Comercio</h2>
+      <p class="section-sub">Publica objetos, cuentas o skins que quieras vender o intercambiar con el resto del clan.</p>
+
+      <div class="locked-box" id="comercio-locked">
+        Necesitas iniciar sesión como miembro del clan para poder publicar artículos.
+        <div><button type="button" class="btn primary small" id="comercio-login-btn">Iniciar sesión</button></div>
+      </div>
+      <div class="card" id="comercio-card" style="display:none;">
+        <form id="form-item">
+          <div class="form-grid">
+            <div class="field"><label for="i-nombre">Nombre del artículo</label><input type="text" id="i-nombre" required placeholder="Ej: Pokémon shiny competitivo"></div>
+            <div class="field"><label for="i-precio">Precio</label><input type="text" id="i-precio" required placeholder="Ej: 15€ o 500 pokedólares"></div>
+            <div class="field full"><label for="i-desc">Descripción</label><textarea id="i-desc" placeholder="Estado, IVs, detalles del trato..."></textarea></div>
+            <div class="field"><label for="i-vendedor">Vendedor</label><input type="text" id="i-vendedor" required placeholder="Tu nombre en el juego"></div>
+            <div class="field"><label for="i-contacto">Contacto</label><input type="text" id="i-contacto" required placeholder="Discord, ej: shadow#1234"></div>
+          </div>
+          <div style="margin-top:18px;"><button type="submit" class="btn primary">Publicar artículo</button></div>
+        </form>
+      </div>
+
+      <div class="subgroup-title">En venta</div>
+      <div class="list" id="lista-comercio"><div class="loading">Cargando artículos...</div></div>
+    </div>
+  </section>
+
+  <!-- ============ TWITCH ============ -->
+  <section id="twitch">
+    <div class="wrap">
+      <div class="eyebrow">EN DIRECTO</div>
+      <h2 class="section-title">Twitch</h2>
+      <p class="section-sub">Canales de Twitch de los miembros del clan. Si transmites, añade tu canal aquí para que el resto de Phantom te encuentre.</p>
+
+      <div class="card">
+        <form id="form-twitch">
+          <div class="form-grid">
+            <div class="field"><label for="t-nombre">Nombre del miembro</label><input type="text" id="t-nombre" required placeholder="Tu nombre en el clan"></div>
+            <div class="field"><label for="t-canal">Usuario de Twitch</label><input type="text" id="t-canal" required placeholder="Ej: shadowplays (sin twitch.tv/)"></div>
+          </div>
+          <div style="margin-top:18px;"><button type="submit" class="btn primary">Añadir canal</button></div>
+        </form>
+      </div>
+
+      <div class="subgroup-title">Canales del clan</div>
+      <div class="list" id="lista-twitch"><div class="loading">Cargando canales...</div></div>
+    </div>
+  </section>
+
+  <!-- ============ RANGOS ============ -->
+  <section id="rangos">
+    <div class="wrap">
+      <div class="eyebrow">JERARQUÍA</div>
+      <h2 class="section-title">Rangos</h2>
+      <p class="section-sub">La jerarquía de Phantom: Líder, Co-Líder y Miembro. Asigna el rango de cada uno desde el roster.</p>
+
+      <div class="card" style="margin-bottom:36px;"><div id="jerarquia"></div></div>
+
+      <div class="subgroup-title">Miembros del clan</div>
+      <div class="card" style="margin-bottom:20px;" data-solo-lider>
+        <form id="form-miembro" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
+          <div class="field" style="flex:1;min-width:180px;"><label for="m-nombre">Nombre del miembro</label><input type="text" id="m-nombre" required placeholder="Ej: Kira"></div>
+          <div class="field" style="min-width:160px;"><label for="m-rango">Rango inicial</label><select id="m-rango"></select></div>
+          <button type="submit" class="btn primary">Añadir al clan</button>
+        </form>
+      </div>
+
+      <div class="list" id="lista-miembros"><div class="loading">Cargando miembros...</div></div>
+    </div>
+  </section>
+
+  <!-- ============ REGLAS ============ -->
+  <section id="reglas">
+    <div class="wrap">
+      <div class="eyebrow">NORMATIVA</div>
+      <h2 class="section-title">Reglas del Clan</h2>
+      <p class="section-sub">Lo básico para que Phantom funcione. Se aplican a todos por igual.</p>
+
+      <div class="rules-list">
+        <div class="rule-item"><div class="rule-num">1</div><div><div class="rule-title">Respeto ante todo</div><div class="rule-desc">No se tolera el acoso, los insultos ni la discriminación entre miembros, dentro o fuera del juego.</div></div></div>
+        <div class="rule-item"><div class="rule-num">2</div><div><div class="rule-title">Colaboración obligatoria</div><div class="rule-desc">Todo miembro debe participar activamente en las actividades del clan. La inactividad injustificada y prolongada puede suponer la expulsión.</div></div></div>
+        <div class="rule-item"><div class="rule-num">3</div><div><div class="rule-title">No robar ni traicionar</div><div class="rule-desc">Está prohibido robar recursos, objetos o cuentas a otros miembros del clan.</div></div></div>
+        <div class="rule-item"><div class="rule-num">4</div><div><div class="rule-title">Comunicación por los canales oficiales</div><div class="rule-desc">Cualquier conflicto entre miembros se reporta a un Co-Líder o al Líder, nunca se resuelve fuera del servidor.</div></div></div>
+        <div class="rule-item"><div class="rule-num">5</div><div><div class="rule-title">Sin spam ni publicidad</div><div class="rule-desc">No se permite publicidad de otros servidores o clanes sin permiso explícito de la oficialidad.</div></div></div>
+        <div class="rule-item"><div class="rule-num">6</div><div><div class="rule-title">Decisiones del liderazgo</div><div class="rule-desc">Las decisiones de Líder y Co-Líder en temas de gestión son finales, aunque siempre se pueden debatir con respeto.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <div class="logo" style="font-size:20px;">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M16 2C9 2 5 7 5 14v12l3.5-3 3 3 4.5-4.5 4.5 4.5 3-3 3.5 3V14C24 7 20 2 16 2z" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="14" r="1.6"/><circle cx="20" cy="14" r="1.6"/></svg>
+            PHANTOM
+          </div>
+          <p class="footer-tagline">Clan competitivo de élite en Diosesmon. Top #4 del servidor y subiendo.</p>
+          <div class="footer-socials">
+            <a href="https://discord.gg/ZeRBnJXN5" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6.5a17 17 0 00-4.2-1.3l-.2.4a13 13 0 014 1.9 15 15 0 00-15.2 0 13 13 0 014-1.9l-.2-.4A17 17 0 004 6.5C1.8 10 1 13.4 1.3 16.7a17 17 0 005.1 2.6l.6-1a10 10 0 01-1.7-.8l.4-.3a12 12 0 0012.6 0l.4.3a10 10 0 01-1.7.8l.6 1a17 17 0 005.1-2.6C22.9 13.4 22.1 10 20 6.5zM8.7 14.9c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm6.6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z"/></svg></a>
+            <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 3h3l-6.6 7.5L22.4 21h-6.1l-4.8-6.3L5.9 21H2.9l7-8-7.6-10h6.2l4.4 5.8L18.2 3z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.5s-.2-1.5-.8-2.2c-.8-.9-1.7-.9-2.1-1C16.4 5 12 5 12 5s-4.4 0-7.1.3c-.4.1-1.3.1-2.1 1C2.2 7 2 8.5 2 8.5S1.8 10.2 1.8 12v1.9c0 1.8.2 3.5.2 3.5s.2 1.5.8 2.2c.8.9 1.9.9 2.4 1C7 20.9 12 21 12 21s4.4 0 7.1-.4c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.2.8-2.2s.2-1.7.2-3.5V12c0-1.8-.2-3.5-.2-3.5zM9.8 15.3V9.4l5.4 3-5.4 2.9z"/></svg></a>
+            <a href="#" aria-label="Twitch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2 2.5 5.5v14H7V22l3-2.5h3.5L20 14V2H4zm14 11-3 3h-3.5L9 18.5V16H6V4h12v9z"/><path d="M15.5 7h1.7v4.5h-1.7zM10.7 7h1.7v4.5h-1.7z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>NAVEGACIÓN</h5>
+          <a href="#inicio">Inicio</a><a href="#noticias">Noticias</a><a href="#clan">Clan</a>
+        </div>
+        <div class="footer-col">
+          <h5>CLAN</h5>
+          <a href="#reglas">Reglas</a><a href="#postulaciones">Postular</a><a href="#comercio">Comercio</a><a href="#twitch">Twitch</a><a href="asesor.html">Asesor IA</a>
+        </div>
+        <div class="footer-col">
+          <h5>SERVIDOR</h5>
+          <a href="#" style="color:var(--text);font-weight:600;">mc.diosesmon.net</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© Phantom Clan. Todos los derechos reservados.</span>
+        <span>No es un producto oficial de Minecraft, Mojang, Microsoft ni de Diosesmon.</span>
+      </div>
+    </div>
+  </footer>
+
+<script type="module">
+// ---------------- FIREBASE (guarda los datos de verdad y los sincroniza en tiempo real) ----------------
+// 1. Ve a https://console.firebase.google.com , crea un proyecto gratis.
+// 2. Dentro del proyecto: "Compilación" > "Firestore Database" > "Crear base de datos" (modo producción está bien).
+// 3. En "Reglas" de Firestore pega esto para empezar (luego puedes restringirlo más):
+//    rules_version = '2';
+//    service cloud.firestore {
+//      match /databases/{database}/documents {
+//        match /phantom_clan/{doc} { allow read, write: if true; }
+//      }
+//    }
+// 4. En el proyecto, ve a "Configuración del proyecto" > sección "Tus apps" > icono "</>" (Web) y registra la app.
+// 5. Copia el objeto firebaseConfig que te da Firebase y pégalo aquí abajo, reemplazando el de ejemplo.
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDsRty34sBjUNg_3PnounfmGMvG3SFhZ0k",
+  authDomain: "phantom-4cdc5.firebaseapp.com",
+  projectId: "phantom-4cdc5",
+  storageBucket: "phantom-4cdc5.firebasestorage.app",
+  messagingSenderId: "713381333147",
+  appId: "1:713381333147:web:3b5423a74b84bd7de91e3e"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+
+// ---------------- CONFIG ----------------
+const RANGOS = [
+  { id: 'lider',   nombre: 'Líder',    desc: 'Dirige el clan: gestiona el roster, el mercado y las postulaciones sin restricciones.', opacity: 1,   glow: 20 },
+  { id: 'colider', nombre: 'Co-Líder', desc: 'Puede postular y publicar en el mercado, además de aprobar o denegar postulaciones.', opacity: .68, glow: 10 },
+  { id: 'miembro', nombre: 'Miembro',  desc: 'Puede postular y publicar artículos en el mercado.', opacity: .34, glow: 0 },
+];
+const MARQUEE_ITEMS = ['TOP #4 SERVIDOR DIOSESMON','CLAN ÉLITE','CACERÍA IMPLACABLE DE SHINIES','1200 VICTORIAS REGISTRADAS','RECLUTAMIENTO ABIERTO'];
+const DISCORD_INVITE_CODE = 'ZeRBnJXN5'; // cambia esto si alguna vez renuevas el enlace de invitación
+
+// ---------------- CUENTAS DE MIEMBRO ----------------
+// Cada miembro crea su propia contraseña la primera vez que inicia sesión: la elige
+// él mismo y queda guardada junto a su ficha en el roster (Firestore). Ya no hay una
+// única contraseña compartida por rango. Sigue sin ser un sistema de seguridad de
+// nivel bancario (cualquiera con acceso a la base de datos podría verla en texto
+// plano), pero cada uno entra con su propia clave.
+const RANGO_LABEL = { miembro: 'Miembro', colider: 'Co-Líder', lider: 'Líder' };
+
+// ---------------- SESIÓN ----------------
+function getSesionId(){ return localStorage.getItem('phantom_sesion_id') || null; }
+function setSesionId(id){ localStorage.setItem('phantom_sesion_id', id); }
+function cerrarSesion(){ localStorage.removeItem('phantom_sesion_id'); aplicarPermisos(); }
+
+// El miembro logueado se busca siempre en el roster actual: así, si el líder le
+// cambia el rango o lo saca del clan, sus permisos se actualizan al momento.
+function getMiembroActual(){
+  const id = getSesionId();
+  if(!id || !cargado.phantom_miembros) return null;
+  return cache.phantom_miembros.find(m => m.id === id) || null;
+}
+function getSesion(){ const m = getMiembroActual(); return m ? m.rango : null; }
+
+// true si el rango actual tiene AL MENOS el nivel pedido (miembro < colider < lider)
+function tieneNivel(minimo){
+  const orden = ['miembro','colider','lider'];
+  const actual = getSesion();
+  if(!actual) return false;
+  return orden.indexOf(actual) >= orden.indexOf(minimo);
+}
+function esLider(){ return getSesion() === 'lider'; }
+function esOficialidad(){ return tieneNivel('colider'); } // colider o lider
+
+function aplicarPermisos(){
+  // Si el miembro logueado ya no existe en el roster (lo eliminó el líder), cerramos
+  // su sesión en vez de dejarla "colgada".
+  if(getSesionId() && cargado.phantom_miembros && !getMiembroActual()){
+    localStorage.removeItem('phantom_sesion_id');
+  }
+  const miembro = getMiembroActual();
+  const label = document.getElementById('session-label');
+  if(miembro){
+    label.textContent = miembro.nombre + ' · ' + RANGO_LABEL[miembro.rango] + ' · Cerrar sesión';
+  } else if(getSesionId()){
+    label.textContent = 'Cargando sesión…';
+  } else {
+    label.textContent = 'Iniciar sesión';
+  }
+
+  // Comercio: requiere cualquier miembro con sesión iniciada
+  document.getElementById('comercio-locked').style.display = miembro ? 'none' : 'block';
+  document.getElementById('comercio-card').style.display = miembro ? 'block' : 'none';
+
+  // Postulaciones recibidas: solo visibles para Líder y Co-Líder
+  const postLocked = document.getElementById('postulaciones-locked');
+  const postTitle = document.getElementById('postulaciones-title');
+  const postList = document.getElementById('lista-postulaciones');
+  if(postLocked){
+    postLocked.style.display = esOficialidad() ? 'none' : 'block';
+    postTitle.style.display = esOficialidad() ? '' : 'none';
+    postList.style.display = esOficialidad() ? '' : 'none';
+  }
+
+  // Elementos solo-Líder (se muestran según el caso al re-renderizar listas)
+  document.querySelectorAll('[data-solo-lider]').forEach(el => { el.style.display = esLider() ? '' : 'none'; });
+
+  // Re-pintar listas que cambian según el rango (botones de aprobar/denegar/eliminar)
+  renderPostulaciones();
+  renderMiembros();
+  renderComercio();
+}
+
+// ---------------- MODAL LOGIN ----------------
+const loginOverlay = document.getElementById('login-overlay');
+function poblarSelectMiembros(){
+  const select = document.getElementById('login-miembro');
+  const lista = cache.phantom_miembros || [];
+  if(!cargado.phantom_miembros || lista.length === 0){
+    select.innerHTML = '<option value="">— Todavía no hay miembros en el roster —</option>';
+    return;
+  }
+  select.innerHTML = lista.map(m => `<option value="${m.id}">${escapeHtml(m.nombre)}</option>`).join('');
+}
+function abrirLogin(){
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('login-pass').value = '';
+  poblarSelectMiembros();
+  loginOverlay.classList.add('open');
+}
+function cerrarLogin(){ loginOverlay.classList.remove('open'); }
+
+document.getElementById('session-pill').addEventListener('click', () => {
+  if(getSesionId()){ cerrarSesion(); } else { abrirLogin(); }
+});
+document.getElementById('comercio-login-btn').addEventListener('click', abrirLogin);
+document.getElementById('postulaciones-login-btn').addEventListener('click', abrirLogin);
+document.getElementById('login-cancel').addEventListener('click', cerrarLogin);
+loginOverlay.addEventListener('click', e => { if(e.target === loginOverlay) cerrarLogin(); });
+
+document.getElementById('form-login').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('login-miembro').value;
+  const pass = document.getElementById('login-pass').value;
+  const errorBox = document.getElementById('login-error');
+  const lista = await getList('phantom_miembros');
+  const idx = lista.findIndex(m => m.id === id);
+  if(!id || idx === -1){
+    errorBox.textContent = 'Elige tu nombre en la lista. Si no apareces, pide al líder que te añada al roster primero.';
+    errorBox.classList.add('show');
+    return;
+  }
+  const miembro = lista[idx];
+  if(!miembro.password){
+    // Primera vez que este miembro inicia sesión: la contraseña que escribe se
+    // convierte en la suya a partir de ahora.
+    if(pass.length < 4){
+      errorBox.textContent = 'Elige una contraseña de al menos 4 caracteres.';
+      errorBox.classList.add('show');
+      return;
+    }
+    lista[idx] = { ...miembro, password: pass };
+    await setList('phantom_miembros', lista);
+    setSesionId(id);
+    cerrarLogin();
+    aplicarPermisos();
+    return;
+  }
+  if(pass === miembro.password){
+    setSesionId(id);
+    cerrarLogin();
+    aplicarPermisos();
+  } else {
+    errorBox.textContent = 'Contraseña incorrecta.';
+    errorBox.classList.add('show');
+  }
+});
+
+// ---------------- DISCORD BOT (notificación de resultado de postulaciones) ----------------
+// Ya NO se usa un webhook: los avisos los manda el bot a través de tu propio
+// servidor (phantom-bot-server). Pega aquí la URL pública de ese servidor
+// (la que te da Railway/Render) y la misma API_KEY que configuraste allí.
+const BOT_SERVER_URL = 'https://assasas-production.up.railway.app'; // Ej: 'https://phantom-bot-server-production.up.railway.app'
+const BOT_SERVER_API_KEY = 'phantom-2026-x7f9-secreto'; // La misma API_KEY que pusiste en las variables de entorno del servidor
+
+// El webhook antiguo se deja aquí solo de referencia, deshabilitado (vacío = no se usa).
+const DISCORD_WEBHOOK_URL = '';
+
+async function notificarDiscordPostulacion(postulacion, estado){
+  if(!BOT_SERVER_URL || !BOT_SERVER_API_KEY) return; // no configurado todavía
+  const nombre = postulacion.mcUser || postulacion.discord || 'Alguien';
+  try{
+    await fetch(`${BOT_SERVER_URL}/api/notificar-postulacion`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': BOT_SERVER_API_KEY
+      },
+      body: JSON.stringify({
+        nombre,
+        discord: postulacion.discord || '',
+        mcUser: postulacion.mcUser || '',
+        estado
+      })
+    });
+  }catch(e){
+    console.warn('No se pudo notificar a Discord (bot) el resultado de la postulación.', e);
+  }
+}
+
+// ---------------- DISCORD LIVE STATS ----------------
+async function fetchDiscordStats(){
+  try{
+    const res = await fetch(`https://discord.com/api/v9/invites/${DISCORD_INVITE_CODE}?with_counts=true&with_expiration=true`);
+    if(!res.ok) throw new Error('Respuesta no válida de Discord');
+    const data = await res.json();
+    const online = data.approximate_presence_count;
+    if(typeof online === 'number'){
+      document.querySelectorAll('.js-discord-online').forEach(el => el.textContent = online);
+    }
+  }catch(e){
+    // Si Discord no responde (invitación caducada, sin conexión, etc.) se queda el número del roster guardado
+    console.warn('No se pudo obtener el estado de Discord, usando el roster guardado como respaldo.', e);
+  }
+}
+
+// ---------------- STORAGE HELPERS (Firestore, persistente y en tiempo real) ----------------
+const CLAVES = ['phantom_miembros', 'phantom_postulaciones', 'phantom_comercio', 'phantom_twitch'];
+const cache = { phantom_miembros: [], phantom_postulaciones: [], phantom_comercio: [], phantom_twitch: [] };
+
+// Mientras no llegue el primer dato real de Firestore, no repintamos con listas vacías
+// (así no "desaparecen" los miembros un instante al cargar/actualizar la página).
+const cargado = { phantom_miembros: false, phantom_postulaciones: false, phantom_comercio: false, phantom_twitch: false };
+
+function renderPorClave(key){
+  if(key === 'phantom_miembros'){ aplicarPermisos(); }
+  if(key === 'phantom_postulaciones'){ renderPostulaciones(); }
+  if(key === 'phantom_comercio'){ renderComercio(); }
+  if(key === 'phantom_twitch'){ renderTwitch(); }
+  renderStats();
+}
+
+CLAVES.forEach(key => {
+  onSnapshot(doc(db, 'phantom_clan', key), snap => {
+    cache[key] = snap.exists() && Array.isArray(snap.data().items) ? snap.data().items : [];
+    cargado[key] = true;
+    renderPorClave(key);
+  }, err => {
+    console.error('No se pudo conectar con Firestore para', key, err);
+  });
+});
+
+async function getList(key){
+  return cache[key] || [];
+}
+async function setList(key, arr){
+  cache[key] = arr;
+  try{ await setDoc(doc(db, 'phantom_clan', key), { items: arr }); }
+  catch(e){ console.error('Error guardando', key, e); }
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function escapeHtml(str){ const div = document.createElement('div'); div.textContent = str || ''; return div.innerHTML; }
+
+// ---------------- MARQUEE ----------------
+(function renderMarquee(){
+  const track = document.getElementById('marqueeTrack');
+  const content = MARQUEE_ITEMS.map(t => `<span>${t}</span>`).join('');
+  track.innerHTML = content + content;
+})();
+
+// ---------------- CLAN DROPDOWN ----------------
+const clanDrop = document.getElementById('clanDrop');
+clanDrop.querySelector('span').addEventListener('click', e => {
+  e.stopPropagation();
+  clanDrop.classList.toggle('open');
+});
+document.addEventListener('click', () => clanDrop.classList.remove('open'));
+clanDrop.querySelectorAll('.dropdown a').forEach(a => a.addEventListener('click', () => clanDrop.classList.remove('open')));
+
+// ---------------- STATS ----------------
+async function renderStats(){
+  if(!cargado.phantom_miembros || !cargado.phantom_postulaciones || !cargado.phantom_comercio) return;
+  const [miembros, postulaciones, items] = await Promise.all([
+    getList('phantom_miembros'), getList('phantom_postulaciones'), getList('phantom_comercio')
+  ]);
+  document.getElementById('nav-miembros').textContent = miembros.length;
+  document.getElementById('stat-miembros').textContent = miembros.length;
+  document.getElementById('hub-miembros').textContent = miembros.length;
+}
+
+// ---------------- POSTULACIONES ----------------
+document.getElementById('form-postulacion').addEventListener('submit', async e => {
+  e.preventDefault();
+  const val = id => document.getElementById(id).value.trim();
+  const nueva = {
+    id: uid(),
+    discord: val('p-discord'),
+    email: val('p-email'),
+    mcUser: val('p-mcuser'),
+    edad: val('p-edad'),
+    pais: val('p-pais'),
+    expBasica: val('p-expbasica'),
+    expAvanzada: val('p-expavanzada'),
+    cobblemon: val('p-cobblemon'),
+    competitivo: val('p-competitivo'),
+    rangoComprado: val('p-rangocomprado'),
+    rangoFuturo: val('p-rangofuturo'),
+    construccion: val('p-construccion'),
+    decoracion: val('p-decoracion'),
+    activo: val('p-activo'),
+    llamada: val('p-llamada'),
+    mudanza: val('p-mudanza'),
+    aporte: val('p-aporte'),
+    comentario: val('p-comentario'),
+    estado: 'pendiente',
+    fecha: new Date().toLocaleDateString('es-ES')
+  };
+  const lista = await getList('phantom_postulaciones');
+  lista.unshift(nueva);
+  await setList('phantom_postulaciones', lista);
+  e.target.reset();
+  await renderPostulaciones();
+  await renderStats();
+});
+
+async function renderPostulaciones(){
+  if(!cargado.phantom_postulaciones) return;
+  const cont = document.getElementById('lista-postulaciones');
+  const lista = await getList('phantom_postulaciones');
+  if(lista.length === 0){ cont.innerHTML = '<div class="empty">Todavía no hay postulaciones. Sé el primero en enviar una.</div>'; return; }
+  const dato = (label, value) => value ? `<div class="row-body" style="margin-top:6px;"><strong style="color:var(--text)">${label}:</strong> ${escapeHtml(value)}</div>` : '';
+  cont.innerHTML = lista.map(p => `
+    <div class="row-card">
+      <div class="row-main">
+        <div class="row-title">${escapeHtml(p.mcUser)} <span class="badge ${p.estado}">${badgeLabel(p.estado)}</span></div>
+        <div class="row-meta">Discord: ${escapeHtml(p.discord)} · ${escapeHtml(p.email)} · ${escapeHtml(p.edad)} años · ${escapeHtml(p.pais)} · ${p.fecha}</div>
+        ${dato('Experiencia básica en Minecraft', p.expBasica)}
+        ${dato('Experiencia avanzada (redstone, etc.)', p.expAvanzada)}
+        ${dato('Experiencia en Cobblemon', p.cobblemon)}
+        ${dato('Experiencia en Pokémon competitivo', p.competitivo)}
+        ${dato('Rango comprado en DIOSESMON', p.rangoComprado)}
+        ${dato('Intención de comprar rango', p.rangoFuturo)}
+        ${dato('Nivel de construcción', p.construccion)}
+        ${dato('Nivel de decoración', p.decoracion)}
+        ${dato('Activo a diario', p.activo)}
+        ${dato('Disponible para llamadas de Discord', p.llamada)}
+        ${dato('De acuerdo con mudarse a la sede', p.mudanza)}
+        ${dato('Qué aportaría al clan', p.aporte)}
+        ${dato('Comentario adicional', p.comentario)}
+      </div>
+      <div class="row-actions">
+        ${esOficialidad() ? (p.estado === 'pendiente' ? `
+          <button class="btn small primary" data-accept="${p.id}">Aceptar</button>
+          <button class="btn danger" data-reject="${p.id}">Rechazar</button>
+        ` : (esLider() ? `<button class="btn danger" data-delete-post="${p.id}">Eliminar</button>` : '')) : ''}
+      </div>
+    </div>
+  `).join('');
+  cont.querySelectorAll('[data-accept]').forEach(b => b.addEventListener('click', () => updatePostulacion(b.dataset.accept, 'aceptada')));
+  cont.querySelectorAll('[data-reject]').forEach(b => b.addEventListener('click', () => updatePostulacion(b.dataset.reject, 'rechazada')));
+  cont.querySelectorAll('[data-delete-post]').forEach(b => b.addEventListener('click', () => deletePostulacion(b.dataset.deletePost)));
+}
+function badgeLabel(estado){ return estado === 'pendiente' ? 'Pendiente' : estado === 'aceptada' ? 'Aceptada' : 'Rechazada'; }
+async function updatePostulacion(id, estado){
+  if(!esOficialidad()) return;
+  const lista = await getList('phantom_postulaciones');
+  const idx = lista.findIndex(p => p.id === id);
+  if(idx > -1){
+    const yaEstabaAceptada = lista[idx].estado === 'aceptada';
+    const yaEstabaRechazada = lista[idx].estado === 'rechazada';
+    lista[idx].estado = estado;
+    await setList('phantom_postulaciones', lista);
+    if(estado === 'aceptada' && !yaEstabaAceptada){
+      await agregarComoMiembro(lista[idx]);
+      await notificarDiscordPostulacion(lista[idx], 'aceptada');
+    } else if(estado === 'rechazada' && !yaEstabaRechazada){
+      await notificarDiscordPostulacion(lista[idx], 'rechazada');
+    }
+  }
+  await renderPostulaciones(); await renderStats();
+}
+async function agregarComoMiembro(postulacion){
+  const nombre = postulacion.mcUser || postulacion.discord || 'Nuevo miembro';
+  const miembros = await getList('phantom_miembros');
+  if(miembros.some(m => m.nombre.toLowerCase() === nombre.toLowerCase())) return; // evita duplicados
+  miembros.push({ id: uid(), nombre, rango: 'miembro' });
+  await setList('phantom_miembros', miembros);
+  await renderMiembros();
+}
+async function deletePostulacion(id){
+  if(!esLider()) return;
+  const lista = (await getList('phantom_postulaciones')).filter(p => p.id !== id);
+  await setList('phantom_postulaciones', lista);
+  await renderPostulaciones(); await renderStats();
+}
+
+// ---------------- COMERCIO ----------------
+document.getElementById('form-item').addEventListener('submit', async e => {
+  e.preventDefault();
+  if(!getSesion()) return;
+  const nuevo = {
+    id: uid(),
+    nombre: document.getElementById('i-nombre').value.trim(),
+    precio: document.getElementById('i-precio').value.trim(),
+    desc: document.getElementById('i-desc').value.trim(),
+    vendedor: document.getElementById('i-vendedor').value.trim(),
+    contacto: document.getElementById('i-contacto').value.trim(),
+    vendido: false
+  };
+  const lista = await getList('phantom_comercio');
+  lista.unshift(nuevo);
+  await setList('phantom_comercio', lista);
+  e.target.reset();
+  await renderComercio(); await renderStats();
+});
+
+async function renderComercio(){
+  if(!cargado.phantom_comercio) return;
+  const cont = document.getElementById('lista-comercio');
+  const lista = await getList('phantom_comercio');
+  if(lista.length === 0){ cont.innerHTML = '<div class="empty">No hay artículos en venta ahora mismo.</div>'; return; }
+  cont.innerHTML = lista.map(i => `
+    <div class="row-card">
+      <div class="row-main">
+        <div class="row-title">${escapeHtml(i.nombre)} ${i.vendido ? '<span class="badge sold">Vendido</span>' : ''}</div>
+        <div class="row-meta">Vendedor: ${escapeHtml(i.vendedor)} · Contacto: ${escapeHtml(i.contacto)}</div>
+        ${i.desc ? `<div class="row-body">${escapeHtml(i.desc)}</div>` : ''}
+      </div>
+      <div class="row-actions" style="flex-direction:column;align-items:flex-end;gap:10px;">
+        <div class="price-tag">${escapeHtml(i.precio)}</div>
+        ${esLider() ? `
+        <div style="display:flex;gap:8px;">
+          ${!i.vendido ? `<button class="btn small primary" data-sold="${i.id}">Marcar vendido</button>` : ''}
+          <button class="btn danger" data-delete-item="${i.id}">Eliminar</button>
+        </div>` : ''}
+      </div>
+    </div>
+  `).join('');
+  cont.querySelectorAll('[data-sold]').forEach(b => b.addEventListener('click', () => markSold(b.dataset.sold)));
+  cont.querySelectorAll('[data-delete-item]').forEach(b => b.addEventListener('click', () => deleteItem(b.dataset.deleteItem)));
+}
+async function markSold(id){
+  if(!esLider()) return;
+  const lista = await getList('phantom_comercio');
+  const idx = lista.findIndex(i => i.id === id);
+  if(idx > -1){ lista[idx].vendido = true; await setList('phantom_comercio', lista); }
+  await renderComercio(); await renderStats();
+}
+async function deleteItem(id){
+  if(!esLider()) return;
+  const lista = (await getList('phantom_comercio')).filter(i => i.id !== id);
+  await setList('phantom_comercio', lista);
+  await renderComercio(); await renderStats();
+}
+
+// ---------------- TWITCH ----------------
+document.getElementById('form-twitch').addEventListener('submit', async e => {
+  e.preventDefault();
+  let canal = document.getElementById('t-canal').value.trim();
+  canal = canal.replace(/^https?:\/\/(www\.)?twitch\.tv\//i, '').replace(/^@/, '').replace(/\/+$/, '');
+  const nuevo = {
+    id: uid(),
+    nombre: document.getElementById('t-nombre').value.trim(),
+    canal
+  };
+  const lista = await getList('phantom_twitch');
+  lista.unshift(nuevo);
+  await setList('phantom_twitch', lista);
+  e.target.reset();
+  await renderTwitch(); await renderStats();
+});
+
+async function renderTwitch(){
+  if(!cargado.phantom_twitch) return;
+  const cont = document.getElementById('lista-twitch');
+  const lista = await getList('phantom_twitch');
+  if(lista.length === 0){ cont.innerHTML = '<div class="empty">Todavía no hay canales de Twitch añadidos.</div>'; return; }
+  cont.innerHTML = lista.map(t => `
+    <div class="row-card">
+      <div class="row-main">
+        <div class="row-title">${escapeHtml(t.nombre)}</div>
+        <div class="row-meta">twitch.tv/${escapeHtml(t.canal)}</div>
+      </div>
+      <div class="row-actions">
+        <a class="btn small primary" href="https://twitch.tv/${encodeURIComponent(t.canal)}" target="_blank" rel="noopener">Ver canal ↗</a>
+        <button class="btn danger" data-delete-twitch="${t.id}">Quitar</button>
+      </div>
+    </div>
+  `).join('');
+  cont.querySelectorAll('[data-delete-twitch]').forEach(b => b.addEventListener('click', () => deleteTwitch(b.dataset.deleteTwitch)));
+}
+async function deleteTwitch(id){
+  const lista = (await getList('phantom_twitch')).filter(t => t.id !== id);
+  await setList('phantom_twitch', lista);
+  await renderTwitch(); await renderStats();
+}
+
+// ---------------- RANGOS ----------------
+function renderJerarquia(){
+  const cont = document.getElementById('jerarquia');
+  cont.innerHTML = RANGOS.map(r => `
+    <div class="rank-tier">
+      <svg class="ghost-icon" viewBox="0 0 32 32" fill="none" style="opacity:${r.opacity}; filter:drop-shadow(0 0 ${r.glow}px var(--accent));">
+        <path d="M16 3C10 3 6 8 6 14v13l3-2.5 3 2.5 4-3.5 4 3.5 3-2.5 3 2.5V14C26 8 22 3 16 3z" stroke="#f0b6f7" stroke-width="1.6" stroke-linejoin="round" fill="rgba(192,38,211,0.1)"/>
+        <circle cx="12.5" cy="14" r="1.4" fill="#f0b6f7"/><circle cx="19.5" cy="14" r="1.4" fill="#f0b6f7"/>
+      </svg>
+      <div><div class="rank-name">${r.nombre}</div><div class="rank-desc">${r.desc}</div></div>
+    </div>
+  `).join('');
+  const select = document.getElementById('m-rango');
+  select.innerHTML = RANGOS.map(r => `<option value="${r.id}">${r.nombre}</option>`).reverse().join('');
+  select.value = 'miembro';
+}
+
+document.getElementById('form-miembro').addEventListener('submit', async e => {
+  e.preventDefault();
+  if(!esLider()) return;
+  const nombre = document.getElementById('m-nombre').value.trim();
+  const rango = document.getElementById('m-rango').value;
+  if(!nombre) return;
+  const lista = await getList('phantom_miembros');
+  lista.push({ id: uid(), nombre, rango });
+  await setList('phantom_miembros', lista);
+  e.target.reset();
+  document.getElementById('m-rango').value = 'miembro';
+  await renderMiembros(); await renderStats();
+});
+
+async function renderMiembros(){
+  if(!cargado.phantom_miembros) return;
+  const cont = document.getElementById('lista-miembros');
+  const lista = await getList('phantom_miembros');
+  if(lista.length === 0){ cont.innerHTML = '<div class="empty">Todavía no hay miembros registrados en el roster.</div>'; return; }
+  const orden = RANGOS.map(r => r.id);
+  lista.sort((a,b) => orden.indexOf(a.rango) - orden.indexOf(b.rango));
+  const rangoNombre = id => (RANGOS.find(r => r.id === id) || {}).nombre || id;
+  cont.innerHTML = lista.map(m => `
+    <div class="member-row">
+      <div class="member-name">${escapeHtml(m.nombre)}</div>
+      ${esLider() ? `
+      <div style="display:flex;gap:10px;align-items:center;">
+        <select class="rank-select" data-member="${m.id}">
+          ${RANGOS.map(r => `<option value="${r.id}" ${r.id === m.rango ? 'selected' : ''}>${r.nombre}</option>`).join('')}
+        </select>
+        <button class="btn danger" data-delete-member="${m.id}">Quitar</button>
+      </div>` : `<div class="badge pending">${escapeHtml(rangoNombre(m.rango))}</div>`}
+    </div>
+  `).join('');
+  cont.querySelectorAll('.rank-select').forEach(sel => sel.addEventListener('change', () => updateMiembroRango(sel.dataset.member, sel.value)));
+  cont.querySelectorAll('[data-delete-member]').forEach(b => b.addEventListener('click', () => deleteMiembro(b.dataset.deleteMember)));
+}
+async function updateMiembroRango(id, rango){
+  if(!esLider()) return;
+  const lista = await getList('phantom_miembros');
+  const idx = lista.findIndex(m => m.id === id);
+  if(idx > -1){ lista[idx].rango = rango; await setList('phantom_miembros', lista); }
+  await renderMiembros();
+}
+async function deleteMiembro(id){
+  if(!esLider()) return;
+  const lista = (await getList('phantom_miembros')).filter(m => m.id !== id);
+  await setList('phantom_miembros', lista);
+  await renderMiembros(); await renderStats();
+}
+
+// ---------------- INIT ----------------
+// Los roster/postulaciones/comercio se pintan solos en cuanto llega el primer
+// snapshot de Firestore (arriba), y se repintan automáticamente cada vez que
+// cualquier persona conectada haga un cambio.
+renderJerarquia();
+aplicarPermisos();
+fetchDiscordStats();
+setInterval(fetchDiscordStats, 60000);
+</script>
+</body>
+</html>

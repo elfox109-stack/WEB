@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asesor | Phantom Clan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a070f;
+    --panel: #16101f;
+    --panel-alt: #1d1528;
+    --border: #2b2138;
+    --text: #f2ecf7;
+    --text-dim: #9c8fb0;
+    --accent: #c026d3;
+    --accent2: #7c3aed;
+    --accent-soft: rgba(192,38,211,0.14);
+    --success: #58c896;
+    --success-soft: rgba(88,200,150,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 12% 0%, rgba(124,58,237,0.18), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent-soft);}
+  .wrap{max-width:900px;margin:0 auto;padding:0 40px;}
+  .eyebrow{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;
+    color:#f0b6f7;display:flex;align-items:center;gap:8px;margin-bottom:10px;
+  }
+  .eyebrow::before{content:"//";color:var(--accent2);}
+  .section-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:32px;letter-spacing:.3px;margin:0 0 10px;}
+  .section-sub{color:var(--text-dim);font-size:15px;max-width:60ch;line-height:1.6;margin:0 0 40px;}
+
+  /* ---------- TOP NAV ---------- */
+  .topnav{
+    position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 40px;background:rgba(10,7,15,0.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);
+  }
+  .logo{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:23px;letter-spacing:2px;
+    background:linear-gradient(90deg,#ff6fe0,var(--accent) 55%,var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 14px rgba(192,38,211,.35));display:flex;align-items:center;gap:8px;
+  }
+  .logo svg{width:22px;height:22px;flex-shrink:0;}
+  .logo svg path,.logo svg circle{stroke:var(--accent);}
+  .nav-center{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600;color:var(--text-dim);}
+  .nav-center a:hover{color:var(--text);}
+  .nav-center a.active{color:var(--text);}
+  .btn-discord{background:var(--panel-alt);border:1px solid var(--border);padding:8px 16px;border-radius:10px;font-size:13px;font-weight:600;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;
+    padding:13px 24px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;
+    transition:transform .15s ease,opacity .15s ease;font-family:'Inter',sans-serif;
+  }
+  .btn:hover{transform:translateY(-1px);opacity:.94;}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 24px rgba(192,38,211,.28);}
+  .btn.secondary{background:var(--panel);color:var(--text);border:1px solid var(--border);}
+
+  section{padding:60px 0 90px;}
+
+  /* ---------- PASO 1: MODO ---------- */
+  .modo-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .modo-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:28px;
+    cursor:pointer;transition:border-color .15s ease,transform .15s ease;text-align:left;
+  }
+  .modo-card:hover{transform:translateY(-3px);border-color:var(--accent2);}
+  .modo-icon{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .modo-icon svg{width:20px;height:20px;stroke:#f0b6f7;}
+  .modo-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:19px;margin-bottom:6px;}
+  .modo-desc{font-size:13.5px;color:var(--text-dim);line-height:1.6;}
+
+  /* ---------- PASO 2: FORMULARIO ---------- */
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+  label{font-size:12.5px;color:var(--text-dim);font-weight:500;}
+  input,textarea{
+    background:var(--panel-alt);border:1px solid var(--border);color:var(--text);padding:10px 12px;
+    border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .15s ease;width:100%;
+  }
+  input:focus,textarea:focus{border-color:var(--accent);}
+  textarea{resize:vertical;min-height:80px;}
+  .modo-tag{
+    display:inline-flex;align-items:center;gap:7px;background:var(--accent-soft);color:#f0b6f7;
+    font-size:12px;font-weight:700;letter-spacing:.3px;padding:5px 12px;border-radius:20px;margin-bottom:18px;
+  }
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .opcion-radio{
+    display:flex;align-items:center;gap:9px;background:var(--panel-alt);border:1px solid var(--border);
+    border-radius:8px;padding:10px 12px;cursor:pointer;font-size:13.5px;transition:border-color .15s ease;
+  }
+  .opcion-radio:hover{border-color:var(--accent2);}
+  .opcion-radio input{width:auto;accent-color:var(--accent);}
+  .opcion-radio.checked{border-color:var(--accent);}
+  .form-actions{display:flex;gap:10px;margin-top:6px;}
+  .link-volver{font-size:13px;color:var(--text-dim);display:inline-flex;align-items:center;gap:6px;margin-bottom:26px;}
+  .link-volver:hover{color:var(--text);}
+  .rol-field{display:none;}
+  .rol-field.visible{display:flex;}
+
+  /* ---------- RESULTADO ---------- */
+  .resultado-box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;}
+  .resultado-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;color:#f0b6f7;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;letter-spacing:.4px;}
+  .dato{margin-bottom:14px;}
+  .dato-label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;font-weight:600;}
+  .dato-valor{font-size:14.5px;line-height:1.65;}
+  .disclaimer{font-size:12px;color:var(--text-dim);margin-top:18px;padding-top:16px;border-top:1px dashed var(--border);line-height:1.6;}
+  .paso{display:none;}
+  .paso.activo{display:block;}
+
+  footer{padding:40px 0;border-top:1px solid var(--border);margin-top:20px;}
+  .footer-bottom{font-size:12px;color:var(--text-dim);text-align:center;}
+
+  @media (max-width:700px){
+    .wrap{padding:0 20px;}
+    .topnav{padding:14px 18px;}
+    .nav-center{display:none;}
+    .modo-grid{grid-template-columns:1fr;}
+    .opciones{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="topnav">
+    <a href="index.html#inicio" class="logo">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 2C9 2 5 7 5 14v12l3.5-3 3 3 4.5-4.5 4.5 4.5 3-3 3.5 3V14C24 7 20 2 16 2z" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle cx="12" cy="14" r="1.6"/><circle cx="20" cy="14" r="1.6"/>
+      </svg>
+      PHANTOM
+    </a>
+    <nav class="nav-center">
+      <a href="index.html#inicio">Inicio</a>
+      <a href="index.html#noticias">Noticias</a>
+      <a href="index.html#clan">Clan</a>
+      <a href="index.html#reglas">Reglas</a>
+      <a href="asesor.html" class="active">Asesor</a>
+    </nav>
+    <a href="https://discord.gg/ZeRBnJXN5" target="_blank" rel="noopener" class="btn-discord">Discord ↗</a>
+  </header>
+
+  <section id="asesor">
+    <div class="wrap">
+      <a href="index.html#inicio" class="link-volver">← Volver al inicio</a>
+      <div class="eyebrow">ASESOR DE EQUIPO</div>
+      <h2 class="section-title">Asesor de Pokémon</h2>
+      <p class="section-sub">Cuéntanos qué destaca en tu Pokémon y para qué lo quieres usar. Te damos una guía rápida: naturaleza, objeto y estrategia.</p>
+
+      <!-- ===== PASO 1: ELEGIR MODO ===== -->
+      <div class="paso activo" id="paso-modo">
+        <div class="modo-grid">
+          <button type="button" class="modo-card" id="modo-competitivo" data-modo="competitivo">
+            <div class="modo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M17 4h4v3a5 5 0 01-5 5M7 4H3v3a5 5 0 005 5m0-9h8v5a4 4 0 01-8 0V4z"/></svg>
+            </div>
+            <div class="modo-title">Competitivo</div>
+            <div class="modo-desc">Quiero optimizar mi Pokémon para batallas serias: naturaleza, objeto, rol y estrategia de equipo.</div>
+          </button>
+          <button type="button" class="modo-card" id="modo-normal" data-modo="normal">
+            <div class="modo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 6a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+            </div>
+            <div class="modo-title">Uso normal</div>
+            <div class="modo-desc">Solo quiero saber cómo sacarle partido a mi Pokémon para jugar, sin buscar el equipo perfecto.</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== PASO 2: FORMULARIO ===== -->
+      <div class="paso" id="paso-form">
+        <div class="modo-tag" id="modo-tag-label">Competitivo</div>
+        <div class="card">
+          <form id="form-asesor">
+            <div class="field">
+              <label for="a-pokemon">¿Qué Pokémon tienes?</label>
+              <input type="text" id="a-pokemon" required placeholder="Ej: Garchomp">
+            </div>
+
+            <div class="field">
+              <label>¿Qué es lo que más destaca en tu Pokémon?</label>
+              <div class="opciones" data-grupo="stat">
+                <label class="opcion-radio"><input type="radio" name="stat" value="fisico" checked> Ataque físico alto</label>
+                <label class="opcion-radio"><input type="radio" name="stat" value="especial"> Ataque especial alto</label>
+                <label class="opcion-radio"><input type="radio" name="stat" value="velocidad"> Es muy rápido</label>
+                <label class="opcion-radio"><input type="radio" name="stat" value="resistencia"> Aguanta mucho (vida/defensa)</label>
+              </div>
+            </div>
+
+            <div class="field rol-field" id="campo-rol">
+              <label>¿Qué rol quieres que cumpla en tu equipo?</label>
+              <div class="opciones" data-grupo="rol">
+                <label class="opcion-radio"><input type="radio" name="rol" value="sweeper" checked> Atacante rápido (arrasar)</label>
+                <label class="opcion-radio"><input type="radio" name="rol" value="muro"> Muro defensivo</label>
+                <label class="opcion-radio"><input type="radio" name="rol" value="soporte"> Soporte (estados/hazards)</label>
+                <label class="opcion-radio"><input type="radio" name="rol" value="todoterreno"> Todoterreno / equilibrado</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="a-notas">Algo más que quieras contarnos (opcional)</label>
+              <textarea id="a-notas" placeholder="Ej: movimientos que ya tiene, objeto actual, dudas concretas..."></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn secondary" id="btn-cambiar-modo">← Cambiar modo</button>
+              <button type="submit" class="btn primary">Ver recomendación</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===== PASO 3: RESULTADO ===== -->
+      <div class="paso" id="paso-resultado" style="margin-top:22px;"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-bottom">© Phantom Clan. El Asesor da una guía general automática, no analiza tu Pokémon real ni sustituye la experiencia de un jugador veterano.</div>
+    </div>
+  </footer>
+
+<script>
+// =====================================================================
+// ASESOR — 100% en la página, sin servidor y sin IA.
+// Todo lo que ves aquí son reglas fijas escritas a mano: según el modo,
+// lo que destaca en el Pokémon y (si es competitivo) el rol elegido,
+// se junta un texto de recomendación desde las tablas de abajo.
+// =====================================================================
+
+let modoElegido = null;
+
+const pasoModo = document.getElementById('paso-modo');
+const pasoForm = document.getElementById('paso-form');
+const pasoResultado = document.getElementById('paso-resultado');
+const modoTagLabel = document.getElementById('modo-tag-label');
+const campoRol = document.getElementById('campo-rol');
+
+function irAPaso(paso){
+  [pasoModo, pasoForm, pasoResultado].forEach(p => p.classList.remove('activo'));
+  paso.classList.add('activo');
+}
+
+document.querySelectorAll('.modo-card').forEach(card => {
+  card.addEventListener('click', () => {
+    modoElegido = card.dataset.modo;
+    modoTagLabel.textContent = modoElegido === 'competitivo' ? 'Competitivo' : 'Uso normal';
+    campoRol.classList.toggle('visible', modoElegido === 'competitivo');
+    pasoResultado.innerHTML = '';
+    irAPaso(pasoForm);
+    document.getElementById('a-pokemon').focus();
+  });
+});
+
+document.getElementById('btn-cambiar-modo').addEventListener('click', () => irAPaso(pasoModo));
+
+// resaltar la opción marcada visualmente
+document.querySelectorAll('.opcion-radio input').forEach(input => {
+  input.addEventListener('change', () => {
+    document.querySelectorAll(`.opcion-radio input[name="${input.name}"]`).forEach(i => {
+      i.closest('.opcion-radio').classList.toggle('checked', i.checked);
+    });
+  });
+});
+
+// ---------------------------------------------------------------------
+// TABLAS DE REGLAS
+// ---------------------------------------------------------------------
+const REGLAS_COMPETITIVO = {
+  fisico: {
+    sweeper:      { naturaleza: 'Adamant (+Ataque, −Ataque Especial) o Jolly (+Velocidad, −Ataque Especial) si necesita ser más rápido.', objeto: 'Choice Band (máximo daño) o Life Orb (más flexible con movimientos variados).', movimientos: 'Un movimiento fuerte de su tipo principal, un movimiento de prioridad para rematar, y evita movimientos de estado si buscas puro daño.', estrategia: 'Entra cuando ya se haya debilitado a la amenaza principal del rival y arrasa con su Ataque.' },
+    muro:         { naturaleza: 'Impish (+Defensa, −Ataque Especial) para aguantar físicos.', objeto: 'Leftovers o una Baya Sitrus para recuperar vida cada turno.', movimientos: 'Incluye un movimiento de recuperación de vida y uno de estado (paralizar o dormir) para durar más turnos.', estrategia: 'Su papel es resistir golpes y desgastar al rival poco a poco, no rematar rápido.' },
+    soporte:      { naturaleza: 'Impish o Careful, priorizando aguantar mientras coloca trampas/estados.', objeto: 'Leftovers o Focus Sash para sobrevivir un golpe crítico.', movimientos: 'Trampa rocosa o púas para desgastar al equipo rival, más un movimiento de estado (tóxico, paralizar).', estrategia: 'No busca ganar solo: prepara el terreno para que sus compañeros rematen después.' },
+    todoterreno:  { naturaleza: 'Adamant si prioriza pegar fuerte, o Jolly si necesita algo más de velocidad.', objeto: 'Leftovers o Baya Sitrus para aguantar un poco más en combate.', movimientos: 'Combina un movimiento fuerte de su tipo con uno de utilidad (recuperación o estado).', estrategia: 'Juega flexible: entra tanto para atacar como para aguantar según lo pida la partida.' }
+  },
+  especial: {
+    sweeper:      { naturaleza: 'Modest (+Ataque Especial, −Ataque) o Timid (+Velocidad, −Ataque) si necesita ser más rápido.', objeto: 'Choice Specs (máximo daño especial) o Life Orb para más flexibilidad.', movimientos: 'Un movimiento especial fuerte de su tipo, otro de cobertura para tapar debilidades, y evita movimientos físicos.', estrategia: 'Entra cuando el camino esté despejado y castiga con su Ataque Especial.' },
+    muro:         { naturaleza: 'Calm (+Defensa Especial, −Ataque) para aguantar especiales.', objeto: 'Leftovers o Baya Sitrus.', movimientos: 'Un movimiento de recuperación y uno de estado para alargar los combates.', estrategia: 'Aguanta ataques especiales mientras desgasta al rival poco a poco.' },
+    soporte:      { naturaleza: 'Calm o Timid, según si necesita más aguante o más velocidad para colocar el estado antes.', objeto: 'Leftovers o Focus Sash.', movimientos: 'Movimientos de estado (paralizar, confundir) combinados con uno especial de apoyo.', estrategia: 'Prepara la situación para que el resto del equipo remate con ventaja.' },
+    todoterreno:  { naturaleza: 'Modest o Timid según priorices potencia o velocidad.', objeto: 'Leftovers o Baya Sitrus.', movimientos: 'Un movimiento especial fuerte más uno de utilidad (recuperación o estado).', estrategia: 'Flexible: puede atacar o aguantar según lo que pida el combate.' }
+  },
+  velocidad: {
+    sweeper:      { naturaleza: 'Jolly (+Velocidad, −Ataque Especial) o Timid (+Velocidad, −Ataque) según si pega más físico o especial.', objeto: 'Choice Scarf si aún no es lo bastante rápido, o Life Orb si ya lo es.', movimientos: 'Un movimiento fuerte de su tipo y otro de cobertura; su velocidad ya le permite golpear primero.', estrategia: 'Úsalo para adelantarse a rivales peligrosos antes de que puedan actuar.' },
+    muro:         { naturaleza: 'Timid o Jolly para mantener su ventaja de velocidad incluso siendo más defensivo.', objeto: 'Leftovers.', movimientos: 'Un movimiento de estado rápido (paralizar antes de que el rival actúe) y uno de recuperación.', estrategia: 'Al ser rápido, puede colocar estados o defenderse antes de que el rival golpee primero.' },
+    soporte:      { naturaleza: 'Jolly o Timid para asegurar que coloca sus trampas/estados antes que el rival actúe.', objeto: 'Focus Sash o Leftovers.', movimientos: 'Trampas de entrada (púas, rocas) y un movimiento de estado, aprovechando que actúa primero.', estrategia: 'Su velocidad le permite preparar el terreno antes de que el rival pueda reaccionar.' },
+    todoterreno:  { naturaleza: 'Jolly o Timid.', objeto: 'Choice Scarf o Life Orb según cuánta flexibilidad necesites.', movimientos: 'Un movimiento fuerte más uno de utilidad, aprovechando que casi siempre actúa primero.', estrategia: 'Flexible gracias a su velocidad: puede iniciar el ataque o anticiparse a estados peligrosos del rival.' }
+  },
+  resistencia: {
+    sweeper:      { naturaleza: 'Adamant o Modest según su tipo de ataque, ya que su aguante compensa la falta de velocidad.', objeto: 'Assault Vest si pega especial, o Life Orb si pega físico.', movimientos: 'Un movimiento fuerte de su tipo; su aguante le permite quedarse en el campo varios turnos golpeando.', estrategia: 'No necesita ser el primero en golpear: puede permitirse recibir un golpe y devolverlo.' },
+    muro:         { naturaleza: 'Bold (+Defensa, −Ataque) o Calm (+Defensa Especial, −Ataque) según qué lado quieras reforzar.', objeto: 'Leftovers o Assault Vest.', movimientos: 'Un movimiento de recuperación y uno de estado; es el mejor candidato de tu equipo para aguantar de verdad.', estrategia: 'Es tu muro principal: su trabajo es plantarse y no dejar pasar al rival.' },
+    soporte:      { naturaleza: 'Bold o Calm, aprovechando que puede quedarse en el campo mucho tiempo.', objeto: 'Leftovers.', movimientos: 'Trampas de entrada y estados; al aguantar tanto, puede colocarlas varias veces si hace falta.', estrategia: 'Perfecto para sostener la presión sobre el equipo rival durante toda la partida.' },
+    todoterreno:  { naturaleza: 'Bold, Calm o Careful según el tipo de daño que más reciba.', objeto: 'Leftovers o Assault Vest.', movimientos: 'Un movimiento de daño fiable más uno de recuperación o estado.', estrategia: 'Aguanta lo que le echen y devuelve el golpe cuando toca.' }
+  }
+};
+
+const REGLAS_NORMAL = {
+  fisico:      { rol: 'atacante físico', consejo: 'Dale movimientos que dependan de su Ataque y que peguen fuerte: es un buen candidato para liderar tus combates y acabar rápido con los rivales.' },
+  especial:    { rol: 'atacante especial', consejo: 'Aprovecha sus movimientos especiales de mayor poder; suele venir bien contra rivales que resisten los golpes físicos.' },
+  velocidad:   { rol: 'explorador / iniciador', consejo: 'Al ser de los primeros en actuar, es ideal para golpear antes que el rival o para escapar de un combate que se ponga feo.' },
+  resistencia: { rol: 'tanque del equipo', consejo: 'Aguanta bien los golpes: ponlo por delante para proteger a tus compañeros más frágiles y dale movimientos que le permitan resistir varios turnos.' }
+};
+
+// ---------------------------------------------------------------------
+// BASE DE MOVIMIENTOS REALES POR POKÉMON
+// Cuando el Pokémon que escribe el jugador está aquí, el Asesor usa
+// SUS movimientos de verdad en vez del consejo genérico por categoría.
+// danio: sus mejores movimientos de daño (siempre se muestran).
+// cobertura: un movimiento extra para tapar debilidades.
+// setup: movimiento de potenciación (para el rol "Atacante rápido").
+// recuperacion: su mejor movimiento defensivo/de aguante (rol "Muro").
+// utilidad: su mejor movimiento de apoyo/trampas (rol "Soporte").
+// ---------------------------------------------------------------------
+const POKEDEX_MOVES = {
+  garchomp:     { danio:['Earthquake','Dragon Claw'], cobertura:'Stone Edge', setup:'Swords Dance', recuperacion:'Protect', utilidad:'Stealth Rock' },
+  charizard:    { danio:['Flamethrower','Air Slash'], cobertura:'Focus Blast', setup:'Nasty Plot', recuperacion:'Roost', utilidad:'Will-O-Wisp' },
+  blastoise:    { danio:['Scald','Ice Beam'], cobertura:'Dark Pulse', setup:'Shell Smash', recuperacion:'Rest', utilidad:'Rapid Spin' },
+  venusaur:     { danio:['Giga Drain','Sludge Bomb'], cobertura:'Hidden Power Fire', setup:'Growth', recuperacion:'Synthesis', utilidad:'Sleep Powder' },
+  gengar:       { danio:['Shadow Ball','Sludge Wave'], cobertura:'Focus Blast', setup:'Nasty Plot', recuperacion:'Pain Split', utilidad:'Will-O-Wisp' },
+  alakazam:     { danio:['Psychic','Shadow Ball'], cobertura:'Focus Blast', setup:'Calm Mind', recuperacion:'Substitute', utilidad:'Trick' },
+  machamp:      { danio:['Close Combat','Knock Off'], cobertura:'Stone Edge', setup:'Bulk Up', recuperacion:'Rest', utilidad:'Bullet Punch' },
+  tyranitar:    { danio:['Stone Edge','Crunch'], cobertura:'Earthquake', setup:'Dragon Dance', recuperacion:'Rest', utilidad:'Stealth Rock' },
+  metagross:    { danio:['Meteor Mash','Zen Headbutt'], cobertura:'Earthquake', setup:'Agility', recuperacion:'Rest', utilidad:'Stealth Rock' },
+  salamence:    { danio:['Dragon Claw','Earthquake'], cobertura:'Fire Blast', setup:'Dragon Dance', recuperacion:'Roost', utilidad:'Dragon Tail' },
+  dragonite:    { danio:['Outrage','Earthquake'], cobertura:'Fire Punch', setup:'Dragon Dance', recuperacion:'Roost', utilidad:'Extreme Speed' },
+  greninja:     { danio:['Surf','Dark Pulse'], cobertura:'Ice Beam', setup:'Substitute', recuperacion:'Protect', utilidad:'U-turn' },
+  talonflame:   { danio:['Brave Bird','Flare Blitz'], cobertura:'U-turn', setup:'Swords Dance', recuperacion:'Roost', utilidad:'Will-O-Wisp' },
+  ferrothorn:   { danio:['Gyro Ball','Power Whip'], cobertura:'Knock Off', setup:'Curse', recuperacion:'Leech Seed', utilidad:'Spikes' },
+  toxapex:      { danio:['Scald','Poison Jab'], cobertura:'Toxic', setup:'Baneful Bunker', recuperacion:'Recover', utilidad:'Toxic Spikes' },
+  corviknight:  { danio:['Brave Bird','Body Press'], cobertura:'U-turn', setup:'Bulk Up', recuperacion:'Roost', utilidad:'Defog' },
+  dragapult:    { danio:['Dragon Darts','Shadow Ball'], cobertura:'Fire Blast', setup:'Dragon Dance', recuperacion:'Substitute', utilidad:'U-turn' },
+  hydreigon:    { danio:['Dark Pulse','Draco Meteor'], cobertura:'Flamethrower', setup:'Nasty Plot', recuperacion:'Roost', utilidad:'U-turn' },
+  volcarona:    { danio:['Fire Blast','Bug Buzz'], cobertura:'Giga Drain', setup:'Quiver Dance', recuperacion:'Substitute', utilidad:'Psychic' },
+  heatran:      { danio:['Magma Storm','Earth Power'], cobertura:'Dragon Pulse', setup:'Substitute', recuperacion:'Substitute', utilidad:'Stealth Rock' },
+  clefable:     { danio:['Moonblast','Flamethrower'], cobertura:'Fire Blast', setup:'Calm Mind', recuperacion:'Soft-Boiled', utilidad:'Stealth Rock' },
+  blissey:      { danio:['Seismic Toss','Ice Beam'], cobertura:'Thunder Wave', setup:'Soft-Boiled', recuperacion:'Soft-Boiled', utilidad:'Toxic' },
+  gyarados:     { danio:['Waterfall','Earthquake'], cobertura:'Ice Fang', setup:'Dragon Dance', recuperacion:'Substitute', utilidad:'Taunt' },
+  kingdra:      { danio:['Surf','Draco Meteor'], cobertura:'Ice Beam', setup:'Dragon Dance', recuperacion:'Substitute', utilidad:'Rain Dance' },
+  scizor:       { danio:['Bullet Punch','U-turn'], cobertura:'Superpower', setup:'Swords Dance', recuperacion:'Roost', utilidad:'Defog' },
+  bisharp:      { danio:['Knock Off','Iron Head'], cobertura:'Sucker Punch', setup:'Swords Dance', recuperacion:'Protect', utilidad:'Taunt' },
+  mimikyu:      { danio:['Play Rough','Shadow Claw'], cobertura:'Shadow Sneak', setup:'Swords Dance', recuperacion:'Substitute', utilidad:'Will-O-Wisp' },
+  aegislash:    { danio:['Shadow Ball','Iron Head'], cobertura:'Shadow Sneak', setup:'Swords Dance', recuperacion:'King\'s Shield', utilidad:'Toxic' },
+  weavile:      { danio:['Ice Punch','Knock Off'], cobertura:'Icicle Crash', setup:'Swords Dance', recuperacion:'Protect', utilidad:'Taunt' },
+  lucario:      { danio:['Close Combat','Meteor Mash'], cobertura:'Ice Punch', setup:'Swords Dance', recuperacion:'Substitute', utilidad:'Extreme Speed' },
+  infernape:    { danio:['Close Combat','Flare Blitz'], cobertura:'Grass Knot', setup:'Swords Dance', recuperacion:'Substitute', utilidad:'U-turn' },
+  milotic:      { danio:['Scald','Ice Beam'], cobertura:'Dragon Tail', setup:'Calm Mind', recuperacion:'Recover', utilidad:'Toxic' },
+  suicune:      { danio:['Scald','Ice Beam'], cobertura:'Extrasensory', setup:'Calm Mind', recuperacion:'Rest', utilidad:'Roar' },
+  zapdos:       { danio:['Thunderbolt','Hurricane'], cobertura:'Heat Wave', setup:'Agility', recuperacion:'Roost', utilidad:'Volt Switch' },
+  snorlax:      { danio:['Body Slam','Earthquake'], cobertura:'Fire Punch', setup:'Curse', recuperacion:'Rest', utilidad:'Yawn' },
+  slowbro:      { danio:['Scald','Psychic'], cobertura:'Ice Beam', setup:'Calm Mind', recuperacion:'Slack Off', utilidad:'Toxic' },
+  umbreon:      { danio:['Foul Play','Body Slam'], cobertura:'Toxic', setup:'Substitute', recuperacion:'Wish', utilidad:'Toxic' },
+  espeon:       { danio:['Psychic','Shadow Ball'], cobertura:'Signal Beam', setup:'Calm Mind', recuperacion:'Morning Sun', utilidad:'Yawn' },
+  sylveon:      { danio:['Moonblast','Psyshock'], cobertura:'Hyper Voice', setup:'Calm Mind', recuperacion:'Wish', utilidad:'Heal Bell' },
+  gardevoir:    { danio:['Moonblast','Psychic'], cobertura:'Shadow Ball', setup:'Calm Mind', recuperacion:'Substitute', utilidad:'Will-O-Wisp' },
+  kartana:      { danio:['Leaf Blade','Sacred Sword'], cobertura:'Smart Strike', setup:'Swords Dance', recuperacion:'Protect', utilidad:'Defog' },
+  magnezone:    { danio:['Thunderbolt','Flash Cannon'], cobertura:'Hidden Power Fire', setup:'Substitute', recuperacion:'Substitute', utilidad:'Volt Switch' },
+  skarmory:     { danio:['Brave Bird','Body Press'], cobertura:'Whirlwind', setup:'Bulk Up', recuperacion:'Roost', utilidad:'Spikes' },
+  gliscor:      { danio:['Earthquake','Knock Off'], cobertura:'Toxic', setup:'Swords Dance', recuperacion:'Roost', utilidad:'Protect' },
+  rillaboom:    { danio:['Wood Hammer','Grassy Glide'], cobertura:'U-turn', setup:'Swords Dance', recuperacion:'Substitute', utilidad:'Knock Off' },
+  cinderace:    { danio:['Pyro Ball','U-turn'], cobertura:'Gunk Shot', setup:'Sword Dance', recuperacion:'Protect', utilidad:'Court Change' },
+  grimmsnarl:   { danio:['Spirit Break','Sucker Punch'], cobertura:'Drain Punch', setup:'Bulk Up', recuperacion:'Rest', utilidad:'Thunder Wave' }
+};
+
+function normalizarNombre(str){
+  return str.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function buscarEnPokedex(nombre){
+  const clave = normalizarNombre(nombre);
+  return POKEDEX_MOVES[clave] || null;
+}
+
+// A partir de los datos reales de la Pokédex, arma el texto de "movimientos"
+// según el modo y el rol que haya elegido el jugador.
+function movimientosDesdePokedex(entry, modo, rol){
+  if(modo !== 'competitivo'){
+    return `${entry.danio[0]}, ${entry.danio[1]} y ${entry.cobertura}. Son sus movimientos de más impacto: con ellos ya juega bien sin complicarte con roles ni naturalezas.`;
+  }
+  const extra = { sweeper: entry.setup, muro: entry.recuperacion, soporte: entry.utilidad, todoterreno: entry.utilidad }[rol];
+  const extraTxt = { sweeper:'para potenciarse antes de atacar', muro:'para aguantar más turnos en el campo', soporte:'para preparar el terreno a tu equipo', todoterreno:'como movimiento comodín de utilidad' }[rol];
+  return `${entry.danio[0]}, ${entry.danio[1]}, ${entry.cobertura} (cobertura) y ${extra} (${extraTxt}).`;
+}
+
+// ---------------------------------------------------------------------
+// GENERAR RESULTADO
+// ---------------------------------------------------------------------
+document.getElementById('form-asesor').addEventListener('submit', e => {
+  e.preventDefault();
+  const pokemon = document.getElementById('a-pokemon').value.trim();
+  if(!pokemon) return;
+
+  const stat = document.querySelector('input[name="stat"]:checked').value;
+
+  const entryPokedex = buscarEnPokedex(pokemon);
+
+  if(modoElegido === 'competitivo'){
+    const rol = document.querySelector('input[name="rol"]:checked').value;
+    const r = REGLAS_COMPETITIVO[stat][rol];
+    const movimientosTexto = entryPokedex ? movimientosDesdePokedex(entryPokedex, 'competitivo', rol) : r.movimientos;
+    const notaMovimientos = entryPokedex
+      ? `Estos son movimientos reales de ${escapeHtml(pokemon)}, elegidos según el rol "${rol === 'sweeper' ? 'Atacante rápido' : rol === 'muro' ? 'Muro defensivo' : rol === 'soporte' ? 'Soporte' : 'Todoterreno'}" que escogiste.`
+      : `Todavía no tenemos guardado el set exacto de ${escapeHtml(pokemon)}, así que este es un consejo general por categoría. Si nos lo pides en Discord, lo añadimos a la base.`;
+    pasoResultado.innerHTML = `
+      <div class="resultado-box">
+        <div class="resultado-header">🔍 Guía competitiva para ${escapeHtml(pokemon)}</div>
+        <div class="dato"><div class="dato-label">Naturaleza</div><div class="dato-valor">${escapeHtml(r.naturaleza)}</div></div>
+        <div class="dato"><div class="dato-label">Objeto</div><div class="dato-valor">${escapeHtml(r.objeto)}</div></div>
+        <div class="dato"><div class="dato-label">Movimientos</div><div class="dato-valor">${escapeHtml(movimientosTexto)}</div></div>
+        <div class="dato"><div class="dato-label">Estrategia</div><div class="dato-valor">${escapeHtml(r.estrategia)}</div></div>
+        <div class="disclaimer">${notaMovimientos}</div>
+      </div>
+      <div style="margin-top:16px;"><button type="button" class="btn secondary" id="btn-otra-consulta">Hacer otra consulta</button></div>`;
+  } else {
+    const r = REGLAS_NORMAL[stat];
+    const movimientosTexto = entryPokedex
+      ? movimientosDesdePokedex(entryPokedex, 'normal', null)
+      : r.consejo;
+    const notaMovimientos = entryPokedex
+      ? ''
+      : `<div class="disclaimer">Consejo general pensado para jugar sin complicarte demasiado. Si más adelante quieres afinarlo a nivel competitivo, prueba el modo Competitivo del Asesor.</div>`;
+    pasoResultado.innerHTML = `
+      <div class="resultado-box">
+        <div class="resultado-header">🔍 Consejo para ${escapeHtml(pokemon)}</div>
+        <div class="dato"><div class="dato-label">Rol recomendado</div><div class="dato-valor">Le pega bien ser ${escapeHtml(r.rol)} de tu equipo.</div></div>
+        <div class="dato"><div class="dato-label">Mejores movimientos</div><div class="dato-valor">${escapeHtml(movimientosTexto)}</div></div>
+        ${notaMovimientos}
+      </div>
+      <div style="margin-top:16px;"><button type="button" class="btn secondary" id="btn-otra-consulta">Hacer otra consulta</button></div>`;
+  }
+
+  irAPaso(pasoResultado);
+  document.getElementById('btn-otra-consulta').addEventListener('click', () => irAPaso(pasoForm));
+});
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>
